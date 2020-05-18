@@ -25,5 +25,8 @@
         "node": "^13.6.0",
         "npm-check-updates": "^4.0.1",
         "underscore": "^1.9.1"
+    },
+    "devDependencies": {
+        "minimist": "^1.2.5"
     }
 }
