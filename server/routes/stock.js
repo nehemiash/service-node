@@ -170,7 +170,6 @@ app.put("/stock/:id", verificaToken, (req, res) => {
         "cobertura",
         "stockmin",
         "img",
-        "disponible",
     ]);
 
     Stock.findByIdAndUpdate(
