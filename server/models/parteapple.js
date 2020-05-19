@@ -46,6 +46,15 @@ var parteAppleSchema = new Schema({
         type: Boolean,
         default: true,
     },
+    bateria: {
+        type: Boolean,
+        required: false,
+    },
+    retornable: {
+        type: Boolean,
+        default: true,
+        required: false,
+    },
     img: {
         type: String,
         required: false,

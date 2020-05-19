@@ -12,5 +12,6 @@ app.use(require("./nota"));
 app.use(require("./parteapple"));
 app.use(require("./consolidacion"));
 app.use(require("./stock"));
+app.use(require("./kbb"));
 
 module.exports = app;

@@ -131,6 +131,8 @@ app.post("/parteapple", verificaToken, function(req, res) {
         precioCore: body.precioCore,
         precioRegular: body.precioRegular,
         categoria: body.categoria,
+        bateria: body.bateria,
+        retornable: body.retornable,
         img: "No Image",
     });
 
@@ -169,6 +171,8 @@ app.put("/parteapple/:id", verificaToken, (req, res) => {
         "precioExchange",
         "precioCore",
         "precioRegular",
+        "bateria",
+        "retornable",
         "img",
     ]);
 
