@@ -14,5 +14,9 @@ app.use(require("./consolidacion"));
 app.use(require("./stock"));
 app.use(require("./kbb"));
 app.use(require("./sro"));
+app.use(require("./presupuesto"));
+app.use(require("./centro"));
+app.use(require("./orden"));
+app.use(require("./tecnico"));
 
 module.exports = app;

@@ -45,6 +45,10 @@ let presupuestoSchema = new Schema({
         type: Date,
         required: false,
     },
+    activo: {
+        type: Boolean,
+        required: false,
+    },
 }, { versionKey: false });
 
 presupuestoSchema.plugin(uniqueValidator, {

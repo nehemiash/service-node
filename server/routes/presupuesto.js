@@ -131,7 +131,6 @@ app.put("/presupuesto/:id", verificaToken, function(req, res) {
         valorMO: body.valorMO,
         valorFlete: body.valorFlete,
         valorTotal: body.valorTotal,
-        aprobado: body.aprobado,
         modificado: Date.now(),
     };
 
@@ -167,9 +166,49 @@ app.put("/presupuesto/:id", verificaToken, function(req, res) {
 });
 
 // //===============================
+// // Aprobar un presupuesto
+// //===============================
+app.put("/presupuesto/aprobar/:id", [verificaToken], function(req, res) {
+    let id = req.params.id;
+
+    let cambiaEstado = {
+        aprobado: true,
+        fechaAprob: Date.now(),
+        modificado: Date.now(),
+    };
+
+    Presupuesto.findByIdAndUpdate(
+        id,
+        cambiaEstado, { new: true, useFindAndModify: false },
+        (err, presupuestoAct) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err,
+                });
+            }
+
+            if (!presupuestoAct) {
+                return res.status(400).json({
+                    ok: false,
+                    err: {
+                        message: "Cliente No encontrado",
+                    },
+                });
+            }
+
+            res.json({
+                ok: true,
+                presupuesto: presupuestoAct,
+            });
+        }
+    );
+});
+
+// //===============================
 // // Eliminar una catergorias
 // //===============================
-app.delete("/categoria/:id", [verificaToken], function(req, res) {
+app.delete("/presupuesto/:id", [verificaToken], function(req, res) {
     let id = req.params.id;
 
     let cambiaEstado = {
