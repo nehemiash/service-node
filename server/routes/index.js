@@ -13,5 +13,6 @@ app.use(require("./parteapple"));
 app.use(require("./consolidacion"));
 app.use(require("./stock"));
 app.use(require("./kbb"));
+app.use(require("./sro"));
 
 module.exports = app;

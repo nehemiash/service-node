@@ -38,6 +38,10 @@ let sroSchema = new Schema({
         type: Date,
         required: false,
     },
+    completada: {
+        type: Boolean,
+        required: false,
+    },
 }, { versionKey: false });
 
 sroSchema.plugin(uniqueValidator, {
