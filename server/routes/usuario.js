@@ -12,6 +12,8 @@ const {
 
 const app = express();
 
+const jwt = require("jsonwebtoken");
+
 app.get("/usuario", verificaToken, (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -20,13 +22,13 @@ app.get("/usuario", verificaToken, (req, res) => {
     limite = Number(limite);
 
     Usuario.find({ estado: true },
-            "nombre email role estado creado google img ultimoLogin tecnico"
+            "nombre email role estado creado google img ultimoLogin tecnico telefono"
         )
         .skip(desde)
         .limit(limite)
         .exec((err, usuarios) => {
             if (err) {
-                return res.status(400).json({
+                return res.json({
                     ok: false,
                     err,
                 });
@@ -42,7 +44,7 @@ app.get("/usuario", verificaToken, (req, res) => {
         });
 });
 
-app.post("/usuario", [verificaToken, verificaAdmin_Role], function(req, res) {
+app.post("/usuario", function(req, res) {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -51,21 +53,29 @@ app.post("/usuario", [verificaToken, verificaAdmin_Role], function(req, res) {
         password: bcrypt.hashSync(body.password, 10),
         role: body.role,
         creado: Date.now(),
+        telefono: body.telefono,
     });
 
     usuario.save((err, usuarioDB) => {
         if (err) {
-            return res.status(400).json({
+            return res.json({
                 ok: false,
                 err,
             });
         }
+
+        let token = jwt.sign({
+                usuario: usuarioDB,
+            },
+            process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN }
+        );
 
         // usuarioDB.password = null;
 
         res.json({
             ok: true,
             usuario: usuarioDB,
+            token,
         });
     });
 });
@@ -184,6 +194,13 @@ app.get("/usuario/buscar/:termino", verificaToken, (req, res) => {
                 usuario,
             });
         });
+});
+
+app.get("/usuario/update", verificaToken, (req, res) => {
+    res.json({
+        ok: true,
+        usuario: req.usuario,
+    });
 });
 
 module.exports = app;

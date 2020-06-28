@@ -22,7 +22,7 @@ app.post("/login", (req, res) => {
         }
 
         if (!usuarioDB) {
-            return res.status(400).json({
+            return res.json({
                 ok: false,
                 err: {
                     message: "(Usuario) o Contraseña incorrectos",
@@ -31,7 +31,7 @@ app.post("/login", (req, res) => {
         }
 
         if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
-            return res.status(400).json({
+            return res.json({
                 ok: false,
                 err: {
                     message: "Usuario o (Contraseña) incorrectos",
