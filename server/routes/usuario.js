@@ -18,7 +18,7 @@ app.get("/usuario", verificaToken, (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    let limite = req.query.limite || 5;
+    let limite = req.query.limite || 10;
     limite = Number(limite);
 
     Usuario.find({ estado: true },
@@ -80,10 +80,7 @@ app.post("/usuario", function(req, res) {
     });
 });
 
-app.put("/usuario/:id", [verificaToken, verificaAdmin_Role], function(
-    req,
-    res
-) {
+app.put("/usuario/:id", [verificaToken], function(req, res) {
     let id = req.params.id;
     let body = _.pick(req.body, [
         "nombre",
@@ -93,9 +90,8 @@ app.put("/usuario/:id", [verificaToken, verificaAdmin_Role], function(
         "google",
         "estado",
         "tecnico",
+        "telefono",
     ]);
-
-    console.log(body);
 
     Usuario.findByIdAndUpdate(
         id,
@@ -106,17 +102,25 @@ app.put("/usuario/:id", [verificaToken, verificaAdmin_Role], function(
             context: "query", // esta opcion es para que reemplace un valor unique
         },
         (err, usuarioDB) => {
-            console.log(usuarioDB);
             if (err) {
-                return res.status(400).json({
+                return res.json({
                     ok: false,
-                    err,
+                    err: err.message,
                 });
             }
+
+            let token = jwt.sign({
+                    usuario: usuarioDB,
+                },
+                process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN }
+            );
+
+            // usuarioDB.password = null;
 
             res.json({
                 ok: true,
                 usuario: usuarioDB,
+                token,
             });
         }
     );

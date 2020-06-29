@@ -63,7 +63,7 @@ usuarioSchema.methods.toJSON = function() {
 };
 
 usuarioSchema.plugin(uniqueValidator, {
-    message: "{El email debe de ser unico}",
+    message: "El email ya existe",
 });
 
 module.exports = mongoose.model("Usuario", usuarioSchema);
