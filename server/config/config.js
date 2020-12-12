@@ -16,7 +16,7 @@ process.env.CADUCIDAD_TOKEN = "48h";
 process.env.SEED = process.env.SEED || "este-es-el-seed-desarrollo";
 
 if (process.env.NODE_ENV === "dev") {
-    urlDB = "mongodb://localhost:27017/service";
+    urlDB = "mongodb://localhost:27017/sorax";
 } else {
     urlDB = process.env.MONGO_URI;
 }
@@ -26,5 +26,4 @@ process.env.URLDB = urlDB;
 // google client id
 
 process.env.CLIENT_ID =
-    process.env.CLIENT_ID ||
-    "286810902370-5k7npn4hn32j6auulua1omg4einuj012.apps.googleusercontent.com";
+    process.env.CLIENT_ID || "286810902370-5k7npn4hn32j6auulua1omg4einuj012.apps.googleusercontent.com";

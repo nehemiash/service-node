@@ -1,22 +1,16 @@
 const express = require("express");
 const app = express();
 
-app.use(require("./usuario"));
-app.use(require("./login"));
-app.use(require("./categoria"));
-app.use(require("./producto"));
-app.use(require("./uploads"));
-app.use(require("./imagenes"));
-app.use(require("./cliente"));
-app.use(require("./nota"));
-app.use(require("./parteapple"));
-app.use(require("./consolidacion"));
-app.use(require("./stock"));
-app.use(require("./kbb"));
-app.use(require("./sro"));
-app.use(require("./presupuesto"));
-app.use(require("./centro"));
-app.use(require("./orden"));
-app.use(require("./tecnico"));
+app.use(require("./categoriaRoute"));
+app.use(require("./centroRoute"));
+app.use(require("./clienteRoute"));
+app.use(require("./loginRoute"));
+app.use(require("./notaRoute"));
+app.use(require("./ordenRoute"));
+app.use(require("./problemaRoute"));
+app.use(require("./productoRoute"));
+app.use(require("./repuestoRoute"));
+app.use(require("./uploadsRoute"));
+app.use(require("./usuarioRoute"));
 
 module.exports = app;
