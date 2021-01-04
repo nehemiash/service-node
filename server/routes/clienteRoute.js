@@ -12,5 +12,5 @@ app.put("/cliente/:id", verificaToken, clienteCtrl.actualizar);
 app.delete("/cliente/:id", verificaToken, clienteCtrl.eliminar);
 app.get("/cliente/buscar/:termino", verificaToken, clienteCtrl.buscar);
 app.get("/cliente/mostrar/:id", verificaToken, clienteCtrl.mostrarPorId);
-
+app.get("/cliente/mostrardoc/:doc", verificaToken, clienteCtrl.mostrarPorDoc);
 module.exports = app;

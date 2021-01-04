@@ -24,11 +24,11 @@ let listar = async(req, res) => {
         .skip(skip)
         .limit(limite)
         .sort(sort)
-        .populate("producto", "-_id codigo descripcion")
-        .populate("cliente", "-_id codigo nombre")
-        .populate("problema", "-_id descripcion")
-        .populate("notas", "-_id descripcion")
-        .populate("usuario", "-_id nombre")
+        .populate("producto", "_id codigo descripcion")
+        .populate("cliente", "_id codigo nombre")
+        .populate("problema", "_id descripcion")
+        .populate("notas", "_id descripcion")
+        .populate("usuario", "_id nombre")
 
     .exec((err, ordenes) => {
         if (err) {
@@ -63,9 +63,9 @@ let mostrarPorID = async(req, res) => {
     await Orden.findById(id)
         .populate("producto", "codigo descripcion")
         .populate("cliente", "codigo nombre")
-        .populate("problema", "-_id descripcion")
-        .populate("notas", "-_id descripcion")
-        .populate("usuario", "-_id nombre")
+        .populate("problema", "descripcion")
+        .populate("notas", "descripcion")
+        .populate("usuario", "nombre")
         .exec((err, ordenDB) => {
             if (err) {
                 return res.json({
@@ -131,6 +131,9 @@ let crear = async(req, res) => {
         usuario: usuario,
         repuestos: body.repuestos,
         presupuesto: body.presupuesto,
+        aprobado: body.aprobado,
+        fechaAprob: body.fechaAprob,
+        valorPreapro: body.valorPreapro,
         valorPcs: body.valorServicio,
         valorMo: body.valorMo,
         costoFlete: body.costoFlete,
@@ -180,6 +183,7 @@ let actualizar = (req, res) => {
         "repuestos",
         "aprobado",
         "fechaAprob",
+        "valorPreapro",
         "valorPcs",
         "valorMo",
         "costoFlete",

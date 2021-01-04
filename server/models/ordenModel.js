@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const uniqueValidator = require("mongoose-unique-validator");
+const { stringify } = require("querystring");
 
 let Schema = mongoose.Schema;
 
@@ -34,10 +35,7 @@ let ordenSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Nota",
     }, ],
-    obs: [{
-        type: Schema.Types.ObjectId,
-        ref: "Nota",
-    }, ],
+    obs: String,
     aspecto: String,
     reporte: String,
     tecnico: {
@@ -58,6 +56,7 @@ let ordenSchema = new Schema({
     }, ],
     aprobado: Boolean, // si aprubea o no el valor de las piezas
     fechaAprob: Date, // la fecha en que se aprueba el presupuesto
+    valorPreapro: Date, // la fecha en que se aprueba el presupuesto
     valorPcs: Number, // valor total de las piezas
     valorMo: Number, // mano de obra
     costoFlete: Number,

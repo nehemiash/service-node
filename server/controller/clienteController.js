@@ -233,6 +233,31 @@ let mostrarPorId = (req, res) => {
     });
 };
 
+let mostrarPorDoc = (req, res) => {
+    let doc = req.params.doc;
+
+    Cliente.find({ estado: true, documento: doc }).exec((err, cliente) => {
+        if (err) {
+            return res.json({
+                ok: false,
+                err,
+            });
+        }
+
+        if (Object.entries(cliente).length === 0) {
+            return res.json({
+                ok: false,
+                message: "No se encontro el registro",
+            });
+        }
+
+        res.json({
+            ok: true,
+            cliente,
+        });
+    });
+};
+
 module.exports = {
     listar,
     crear,
@@ -240,4 +265,5 @@ module.exports = {
     eliminar,
     buscar,
     mostrarPorId,
+    mostrarPorDoc,
 };
