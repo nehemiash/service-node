@@ -179,6 +179,55 @@ let buscar = (req, res) => {
     });
 };
 
+let catProblema = (req, res) => {
+    Problema.aggregate([{ $unwind: "$categoria" }, { $group: { _id: "$categoria" } }])
+        .sort({ _id: "asc" })
+        .collation({ locale: "en", strength: 1 })
+        .exec(function(err, categorias) {
+            if (err) {
+                return res.json(err);
+            }
+            res.json({
+                categorias,
+            });
+        });
+};
+
+let mostrarPorCat = (req, res) => {
+    let categoria = req.query.categoria;
+
+    if (categoria.length === 0) {
+        return res.json({
+            ok: false,
+            message: "Categoria requerida",
+        });
+    }
+
+    Problema.find({
+        $or: [{ categoria: categoria }],
+    }).exec((err, problema) => {
+        if (err) {
+            return res.json({
+                ok: false,
+                err,
+            });
+        }
+
+        if (Object.entries(problema).length === 0) {
+            return res.json({
+                ok: false,
+
+                message: "No se encontraron registros",
+            });
+        }
+
+        res.json({
+            ok: true,
+            problema,
+        });
+    });
+};
+
 module.exports = {
     listar,
     mostrarPorId,
@@ -186,4 +235,6 @@ module.exports = {
     actualizar,
     eliminar,
     buscar,
+    catProblema,
+    mostrarPorCat,
 };

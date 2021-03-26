@@ -181,6 +181,43 @@ let verificar = (req, res) => {
     });
 };
 
+let listarTecnicos = (req, res) => {
+    let total_tecnicos = 0;
+
+    Usuario.countDocuments({
+            $and: [{ estado: true }, { tecnico: true }],
+        },
+        (err, numOfDocs) => {
+            if (err) throw err;
+            total_tecnicos = numOfDocs;
+        }
+    );
+
+    Usuario.find({
+        $and: [{ estado: true }, { tecnico: true }],
+    }).exec((err, tecnicos) => {
+        if (err) {
+            return res.json({
+                ok: false,
+                err,
+            });
+        }
+
+        if (Object.entries(tecnicos).length === 0) {
+            return res.json({
+                ok: false,
+                message: "No se encontro el usuario",
+            });
+        }
+
+        res.json({
+            ok: true,
+            total_tecnicos,
+            tecnicos,
+        });
+    });
+};
+
 module.exports = {
     listar,
     crear,
@@ -188,4 +225,5 @@ module.exports = {
     eliminar,
     buscar,
     verificar,
+    listarTecnicos,
 };

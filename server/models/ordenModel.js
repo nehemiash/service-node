@@ -56,7 +56,7 @@ let ordenSchema = new Schema({
     }, ],
     aprobado: Boolean, // si aprubea o no el valor de las piezas
     fechaAprob: Date, // la fecha en que se aprueba el presupuesto
-    valorPreapro: Date, // la fecha en que se aprueba el presupuesto
+    valorPreapro: Number, // valor preaprobado
     valorPcs: Number, // valor total de las piezas
     valorMo: Number, // mano de obra
     costoFlete: Number,

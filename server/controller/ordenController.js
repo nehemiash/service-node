@@ -61,11 +61,12 @@ let mostrarPorID = async(req, res) => {
     }
 
     await Orden.findById(id)
-        .populate("producto", "codigo descripcion")
-        .populate("cliente", "codigo nombre")
-        .populate("problema", "descripcion")
+        .populate("producto", "codigo descripcion modelo marca")
+        .populate("cliente", "codigo nombre direccion telefono celular email ciudad pais")
+        .populate("problema1", "descripcion")
         .populate("notas", "descripcion")
         .populate("usuario", "nombre")
+        .populate("tecnico", "nombre")
         .exec((err, ordenDB) => {
             if (err) {
                 return res.json({
@@ -97,12 +98,17 @@ let crear = async(req, res) => {
     let codigo;
 
     // trae el ultimo registro de la DB
-    let ultimo = await Orden.find({}, "-_id codigo").sort({ $natural: -1 }).limit(1).exec();
+    let ultimo = await Orden.find({}, "-_id numero").sort({ $natural: -1 }).limit(1).exec();
+
+    console.log(ultimo);
     // convierte a numero e incrementa
     if (ultimo.length > 0) {
         ultimo = ultimo.toString(); // convierte el objeto a string
+        console.log(ultimo);
         ultimo = parseInt(ultimo.replace(/\D/g, ""));
+        console.log(ultimo);
         codigo = ultimo + 1;
+        console.log(codigo);
     }
     // si no hay ultimo registro comienza en 1
     if (ultimo.length === 0) {
@@ -134,7 +140,7 @@ let crear = async(req, res) => {
         aprobado: body.aprobado,
         fechaAprob: body.fechaAprob,
         valorPreapro: body.valorPreapro,
-        valorPcs: body.valorServicio,
+        valorPcs: body.valorPcs,
         valorMo: body.valorMo,
         costoFlete: body.costoFlete,
         valorTotal: body.valorTotal,

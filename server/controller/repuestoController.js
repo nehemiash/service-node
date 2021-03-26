@@ -5,7 +5,7 @@ const { QueryOpts } = require("../controller/dbconfig");
 let listar = (req, res) => {
     let pagina = Number(req.query.pagina) || 1;
     let limite = Number(req.query.limite) || 15;
-    let sort = req.query.sort || "_id";
+    let sort = req.query.sort || "descripcion";
 
     let skip = pagina - 1;
     skip = skip * limite;
@@ -101,6 +101,7 @@ let buscar = (req, res) => {
     Repuesto.find({ estado: true, $or: [{ descripcion: regex }, { numParte: termino }] })
         .skip(skip)
         .limit(limite)
+        .populate("categoria", "descripcion")
         .sort("descripcion")
         .exec((err, repuestos) => {
             if (err) {

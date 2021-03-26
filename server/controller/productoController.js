@@ -5,7 +5,7 @@ const { QueryOpts } = require("../controller/dbconfig");
 let listar = (req, res) => {
     let pagina = Number(req.query.pagina) || 1;
     let limite = Number(req.query.limite) || 30;
-    let sort = req.query.sort || "_id";
+    let sort = req.query.sort;
 
     let skip = pagina - 1;
     skip = skip * limite;
